@@ -1,0 +1,19 @@
+/* IMPORTATION DE TOUS LES FICHIERS.css */
+
+@import url(pageaccueil.css);
+@import url(regles.css);
+@import url(niveaux.css);
+@import url(game.css);
+@import url(findepartie.css);
+@import url(editeur.css);
+
+body{
+    /* INITIALISATIONS DES MARGES ET DU FOND DE PAGE COMMUN A CHAQUE PAGE */
+    margin:0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(187, 116, 35);
+    background-image:url(./../img/accueil.jpg);
+    background-size:cover;
+    background-repeat: no-repeat;
+}

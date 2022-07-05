@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./../css/style.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="./../img/logourl.jpg">
+    <title>Boulder Dash</title>
+</head>
+<body>
+    <editeur>
+        <h1 class="titre">Boulder Dash</h1>
+        <h2>Editez votre niveau !</h2>
+        <p>Informations : le personnage spawnera en coordonées (2,2).</p>
+        <p>Liste des textures possibles : M = Mur ; T = Terre ; D = Diamant ; R = Roche ; V = Vide ; P = Perso;</p>
+        <form name="editeur">
+            <textarea name="txtedit" autocapitalize="on" class="txt" rows="16" cols="31" minlength="512" maxlength="512">MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTPTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM</textarea>
+            <button class="btn btn-active btntransform" id="Sauvegarde"><div class="text">Sauvegarder</div></button>
+            <button class="btn btn-active btntransform" id="Reinitialisation"><div class="text">Reinitialiser</div></button>
+            <button class="btn btn-active btntransform" id="Retourmenu"><div class="text">Retour</div></button>
+        </form>
+    </editeur>
+    <script src="./../js/editeur.js"></script>
+</body>
+</html>

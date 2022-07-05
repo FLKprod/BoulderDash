@@ -1,0 +1,119 @@
+/* CODE POUR LA DISPOSITION DES ELEMENTS ET L'ESTETIQUE DU MENU PRINCIPAL */
+
+accueil{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    text-align: center;
+}
+
+/* TEXTURES DES TITRES */
+
+.titre {
+    position: relative;
+    font-family: Impact, sans-serif;
+    font-size: 40px;
+    color:whitesmoke;
+    letter-spacing: 2px;
+    border-style: double;
+    background: linear-gradient(90deg, darkblue, rgb(117, 117, 216), darkblue);
+    background-repeat: no-repeat;
+    border-radius: 6%;
+    padding: 1%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+accueil > h2{
+    Font-family: Perpetua, Baskerville, Big Caslon, Palatino Linotype, Palatino, serif;
+    font-size: 1rem;
+    color:whitesmoke;
+    font-weight: bold;
+}
+/* --------------------- */
+
+.div{
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+}
+
+/* ANIMATIONS DU TEXTE PRÉSENT DANS LES BOUTONS DU JEU */
+
+.text{
+    color: #5533ff;
+    position: relative;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    height: auto;
+    font-size: 1.7rem;
+    transition: 0.3s ease-in;
+    transition-delay: 0.1s;
+  }
+.Liste {
+    margin: auto;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+/* --------------------- */
+
+/* TEXTURES DES BOUTONS DU JEU AVANT ANIMATIONS ( SANS QUE LA SOURIS SOIT DESSUS ) */
+
+button{
+    opacity: 85%;
+    border: double;
+    text-decoration: none;
+    color: rgba(white, 0.5);
+    cursor: pointer;
+}
+.btn{
+    padding: 1rem 1rem;
+    background: (white, 0.5);
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    position: relative;
+    will-change: transform;
+}
+
+.btn-active{
+    color: #5533ff;
+    border: 0px transparent;
+    border-radius: 3rem;
+    transition: 0.3s ease-in-out;
+    transition-delay: 0.3s;
+    overflow: hidden;
+}
+.btn-active:before{
+    content: "";
+    display: block;
+    background: #401aff;
+    position: absolute;
+    width: 200%;
+    height: 500%;
+    border-radius: 200%;
+    transition: 0.6s cubic-bezier(0.4, 0, 1, 1);
+}
+/* --------------------- */
+
+/* ANNIMATIONS DES BOUTONS DU JEU LORSQUE LA SOURIS SE TROUVE DESSUS*/
+.btn-active:hover .text {
+    color: white;
+}
+.btn-active:hover{
+    opacity: 100%;
+    transition: 0,6s opacity;
+    color: transparent;
+}
+.btntransform{
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.btntransform:hover:before{
+    transform: translate(-45%,-34%) translateZ(0);
+}
+.btntransform:before{
+    transform: translate(-120%,-50%) translateZ(0);
+}
+/* --------------------- */

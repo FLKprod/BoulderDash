@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./../css/style.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="./../img//logourl.jpg">
+    <title>Boulder Dash</title>
+</head>
+<body>
+    <div class="entete">
+        <button id="Quitter"class="btn btn-active btntransform">
+            <div class="text">Revenir au Menu Principal</div>
+        
+        </button>
+        <h1 class="title">Boulder Dash</h1>
+        <button id="Recommencer" class="btn btn-active btntransform">
+            <div class="text">Recommencer</div>
+        </button>
+    </div>
+    <div id="wrap">
+        <div id = "container">
+        </div>
+        <div id= "joueurzone">
+            <div id = "joueur">
+        </div>
+        </div>  
+    </div>
+    <div id="score">
+        <p>-----------------------------</p>
+        <p id="niveau">Niveau </p>
+        <p>-----------------------------</p>
+        <p id="Chronometre">Chrono : </p>
+        <p>-----------------------------</p>
+        <p id="diamantsrecup">Diamants : </p>
+        <p>-----------------------------</p>
+        <p id="mooverecup">Nombre de déplacements : </p>
+        <p>-----------------------------</p>
+        <p id="respawn">Nombre de réaparition : </p>
+        <p>-----------------------------</p>
+    </div>
+    <audio id="audioPlayer" src="./../mp3/sonjeu.mp3"></audio>
+    <script type="module" src="./../js/game.js"></script>
+</body>

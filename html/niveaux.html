@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./../css/style.css" rel="stylesheet">
+    <title>Boulder Dash</title>
+    <link rel="shortcut icon" href="./../img/logourl.jpg">
+</head>
+<body>
+    <h2>Déterminez l'ordre de passage de chaque niveau ! Pour échanger 2 niveaux de place, cliquer sur les boutons de ces 2 niveaux</h2>
+    <niveaux>
+        <div class="Liste">
+            <button id="Reinitialisation" class="btn btn-active btntransform"><div class="text">Reinitialiser l'Ordre</div></button>
+            <button id="Supression" class="btn btn-active btntransform"><div class="text">Supprimer</div></button>
+            <button id="Echanger" class="btn btn-active btntransform"><div class="text">Echanger 2 niveaux de place</div></button>
+            <button id="Voir" class="btn btn-active btntransform"><div class="text">Voir l'ordre de passage des niveaux</div></button>
+        </div>
+    <div class="search">
+        <input type="text" placeholder="Saisissez le non du fichier texte...."/>
+        <button id="Importation" class="btn btn-active btntransform" onclick="window.location.href='game.html'"><div class="text">Importer</div></button>
+    </div>
+    <div class="Liste">
+        <button class="btn btn-active btntransform" onclick="window.location.href='index.html'" ><div class="text">Retour</div></button>
+    </div>
+    </niveaux>
+    <script type="module" src="./../js/niveaux.js"></script>
+</body>
+</html>
