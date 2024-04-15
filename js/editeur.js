@@ -4,7 +4,7 @@
 
 const retourmenu = document.getElementById("Retourmenu")
 retourmenu.addEventListener("click",()=>{
-    history.back();
+   
 });
 
 //------------------------------------------------------------------------------------------------------//

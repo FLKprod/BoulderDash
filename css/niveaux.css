@@ -1,15 +1,41 @@
 /* CODE POUR LA DISPOSITION DES ELEMENTS ET L'ESTETIQUE DE L'ESPACE POUR IMPORTER ET CHANGER
     L'ORDRE DE PASSAGE DES NIVEAUX DURANT UNE PARTIE DE BOULDER DASH */
 
-niveaux{
+.niveaux-container{
     display: flex;
-    
+    flex-direction:row;
+    align-items: center;
+    justify-content:center;
+    height: 100%;
+}
+
+.area-niveaux{
+    display: flex;
     flex-direction:column;
     align-items: center;
     justify-content:center;
+    width: 50%;
+    height: 100%;
 }
 
-/* CUSTOMSATION DE L'ESPACE POUR ENTRER LE NOM D'UN FICHIER */
+
+
+.niveau {
+    width: 100%;
+    height: auto;
+    padding: 1em;
+    background-color: lightcoral;
+    color: whitesmoke;
+    font-style: bold;
+    border-radius: 1em;
+    margin: 10px;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
 body > input{
     background-color: whitesmoke;
     border: 1px solid darkblue;
@@ -30,9 +56,6 @@ body > input{
     opacity: 0;
     position: absolute;
     font-size: 90px;
-}
-.btn{
-    margin-bottom: 5%;
 }
 .btn-active:hover {
     background-color: #5533ff;
@@ -66,4 +89,8 @@ input{
     border-color: #5533ff;
     background-color: rgb(117, 117, 216);
 
+}
+
+.selected{
+    background-color: lightblue;
 }

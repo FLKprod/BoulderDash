@@ -19,7 +19,7 @@ nouvellegame.addEventListener("click",()=>{
 //-------------------------------------------------------------------------------------------------------------------//
 
 // ------------------------------ REPRISE DE LA PARTIE EN COURS -----------------------------------------------------//
-const continuergame = document.getElementById("Continuergame")
+/*const continuergame = document.getElementById("Continuergame")
 continuergame.addEventListener("click",()=>{
     //'continuer' sert à faire la détection si le client clique sur "continuer la partie en cours"//
     localStorage.setItem('continuer',1);
@@ -39,8 +39,7 @@ continuergame.addEventListener("click",()=>{
     localStorage.setItem('minute',0);
     localStorage.setItem('Niveau',1);
     
-});
-
+});*/
 //---------------------------------------------------------------------------------------------------------------------------//
 
 // --------------------------- GESTION DES AUTRES BOUTONS CONSTITUANT LE MENU PRINCIPAL --------------------------//
@@ -60,4 +59,4 @@ editor.addEventListener("click",()=>{
     window.location.href='editeur.html';
 });
 
-//--------------------------------------------------------------------------------------------------------------------------//
+//--------------------------------------- REGLES --------------------------------------------------------------//

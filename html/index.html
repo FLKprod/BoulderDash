@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./../css/style.css" rel="stylesheet">
-    <title>Boulder Dash</title>
-    <link rel="shortcut icon" href="./../img//logourl.jpg">
+    <title>Rock Rush</title>
+    <link rel="shortcut icon" href="./../img//logo.jpg">
 </head>
 <body>
-    <accueil>
-        <h1 class="titre">Boulder Dash</h1>
+    <div class="accueil">
+        <img class="titre" src="./../img/logo.jpg"></img>
         <div class="Liste">
             <button class="btn btn-active btntransform" id="Nouvellegame"><div class="text">Nouvelle partie !</div></button>
             <button class="btn btn-active btntransform" id="Continuergame"><div class="text">Continuer la partie en cours</div></button>
@@ -19,7 +19,9 @@
             <button class="btn btn-active btntransform" id="Regles"><div class="text">Règles / Documentation</div></button>
         </div>
         <h2>Un projet de Maxime Falkowski et Justin Masson</h2>
-        <script src="./../js/index.js"></script>
+        <script type="module" src="./../js/createElements.js"></script>
+        <script type="module" src="./../js/index.js"></script>
+        
     </accueil>
 </body>
 </html>
