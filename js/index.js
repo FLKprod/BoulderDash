@@ -2,9 +2,7 @@
 
 const nouvellegame = document.getElementById("Nouvellegame")
 nouvellegame.addEventListener("click",()=>{
-   window.location.href='game.html';
-
-    // INITIALISATION DES DIFFÉRENTES VARIABLES POUR UNE NOUVELLE PARTIE //
+    window.location.href='game.html';
     localStorage.setItem('respawn',0);
     localStorage.setItem('Mouvements',0);
     localStorage.setItem('Diamants',0);
@@ -19,13 +17,13 @@ nouvellegame.addEventListener("click",()=>{
 //-------------------------------------------------------------------------------------------------------------------//
 
 // ------------------------------ REPRISE DE LA PARTIE EN COURS -----------------------------------------------------//
-/*const continuergame = document.getElementById("Continuergame")
+const continuergame = document.getElementById("Continuergame")
 continuergame.addEventListener("click",()=>{
     //'continuer' sert à faire la détection si le client clique sur "continuer la partie en cours"//
     localStorage.setItem('continuer',1);
     console.log("continuergame : " + localStorage.getItem('continuer'))
     window.location.href='game.html';
-    //'premierefois' sert à faire la détection si c'est la premiere foid que le client clique sur ce bouton//
+    //'premierefois' sert à faire la détection si c'est la premiere fois que le client clique sur ce bouton//
     //Alors il sera rediriger comme si il lançait une nouvelle partie//
     if(localStorage.getItem('premierefois') == 1)
     localStorage.setItem('premierefois',0)
@@ -39,7 +37,7 @@ continuergame.addEventListener("click",()=>{
     localStorage.setItem('minute',0);
     localStorage.setItem('Niveau',1);
     
-});*/
+});
 //---------------------------------------------------------------------------------------------------------------------------//
 
 // --------------------------- GESTION DES AUTRES BOUTONS CONSTITUANT LE MENU PRINCIPAL --------------------------//
@@ -58,5 +56,3 @@ const editor = document.getElementById("Editeur")
 editor.addEventListener("click",()=>{
     window.location.href='editeur.html';
 });
-
-//--------------------------------------- REGLES --------------------------------------------------------------//

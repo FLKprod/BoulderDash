@@ -60,6 +60,7 @@ resetButton.addEventListener('click', () => {
     // Ajouter les niveaux "Facile", "Normal" et "Difficile" dans cet ordre
     const niveauxNouveaux = ["Facile", "Normal", "Difficile"];
     niveauxNouveaux.forEach(nomNiveau => {
+      
       const divNiveau = document.createElement('div');
       divNiveau.classList.add('niveau');
       divNiveau.textContent = nomNiveau;
@@ -99,36 +100,23 @@ niveaux.forEach(niveau => {
 
 //-----------------------------------CODE POUR IMPORTATION D'UN FICHIER TXT ---------------------------------------//
 
-const bouton = document.getElementById("Importation")
-var path;
-bouton.addEventListener("click",()=>{
-    console.log(ordre);
-    if(validPath(getVal())){
-        path = getVal();
-        console.log("Path : " + path);
-        ordre.push(path);
-        console.log(ordre);
-        localStorage.setItem('Mouvements',0);
-        sessionStorage.setItem('key', path);
-    }
-}
-);
+document.getElementById('fileInput').addEventListener('change', function() {
+  const file = this.files[0];
+  if (file) {
+      if (file.type === 'text/plain') {      
+          const fileName = file.name.split('.').slice(0, -1).join('.');
+          var fileNameDiv = document.createElement('div');
+          fileNameDiv.classList.add('niveau');
+          fileNameDiv.textContent = fileName;
+          ordre = JSON.parse(fileName);
+          localStorage.setItem('Ordre', JSON.stringify(niveauxNouveaux));
+      } else {
+          alert('Veuillez sélectionner un fichier texte (.txt).');
+      }
+  } else {
+      alert('Veuillez sélectionner un fichier.');
+  }
+});
 
-function getVal() {
-    const val = document.querySelector('input').value;
-    console.log(val);
-    return val;
-}
-
-function validPath(value){
-if(value.includes(".txt") && value != null){
-    console.log("Validé");
-    return true;
-}
-else{return false;}
-}
-export function getFilePath(){
-    return path;
-}
 
 //----------------------------------------------------------------------------------------------------------//

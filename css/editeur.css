@@ -1,5 +1,6 @@
 .editeur{
     display: flex;
+    width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
@@ -30,10 +31,11 @@
 }
 
 
-.area-editeur-container > img{
+.btn-container> img{
     height: 10em;
     width: auto;
     border-radius: 1em;
+    margin-bottom: 3em;
 }
 
 .area-editeur-container > p{
@@ -60,7 +62,7 @@ form{
     width: 100%;
 }
 .area-editeur > textarea{
-    width: 100%;
+    width: 75%;
     color: white;
     line-height: 2em;
     letter-spacing: 1em;

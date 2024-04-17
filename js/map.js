@@ -8,16 +8,13 @@ var tabTextfile = new Array();
 var stoneArray = new Array();
 
 //variables pour initialiser et faire bouger le perso//
-var posjoueur;
-var posxjoueur,posyjoueur;
-var spawnjoueurx = 2,spawnjoueury = 2;
+var posjoueur,posxjoueur,posyjoueur;
+var spawnjoueurx,spawnjoueury;
 var joueur = document.getElementById('joueur');
 var alive = true;
-var x = 32, y = 32;
-var delaiRefresh = 500;
 var tabTextfiletout = [],tabTextfile,tailleTxt = 600,valeurloadtxt;
 var compteur = 0;
-var compteurX = 0,compteurY, compteurTY = 0;
+var compteurX = 0,compteurY = 0, compteurTY = 0;
 
 //initialisation du nombre de diamants et du nombre de mouvements
 var totaldiamants;
@@ -26,28 +23,20 @@ var longueur = 0;
 var respawn;
 var clock = true;
 var niveau=localStorage.getItem('Niveau');
-console.log("niveau : " + niveau)
-
-
-var ordre=new Array();
-ordre=JSON.parse(localStorage.getItem('Ordre'));
+var ordre=JSON.parse(localStorage.getItem('Ordre'));
 
 if(respawn==null){
     respawn=0;
 }
 var lock = false;
 
-console.log("map.js!");
-
-
-
 //---------------------------------- CHARGEMENT DES FICHIERS TXT, DES MAPS ----------------------------------------------------------//
 
 //Se déclenche lorsqu'on clique sur "continuer la partie en cours"//
  function continuerpartie(){
-    console.log("continuerpartie" + localStorage.getItem('continuer'))
+    console.log("continuerpartie = " + localStorage.getItem('continuer'))
     if(localStorage.getItem('continuer') == 1){
-        console.log("continuerPARTIE !!!!! ")
+        console.log("reprise de la partie");
         localStorage.setItem('continuer',0);
         posjoueur = localStorage.getItem('posjoueur');
         return true;
@@ -55,51 +44,37 @@ console.log("map.js!");
     return false;
 }
 
-
-
-
-
 async function loadtxt(value)
 {
-    console.log("Ordre : "+ordre);
-    //[niveau-1] car dans un tableau initialisation à 0 et non à 1//
-    value=ordre[niveau-1];
-    console.log(value);
-    //Fichier custom choisi par le client//
-    if(value == "custom"){
-       
+    value=ordre[niveau-1];                          //[niveau-1] car dans un tableau initialisation à 0 et non à 1//
+    
+    if(value == "custom"){          //Fichier custom choisi par le client//
+        fetch('../txt/' + data).then(function(response) {
+        response.text().then(function(text) {
+        console.log("TXT FILE custom : ");
+        tabTextfiletout = text;
+        compteur = 0;
 
-            fetch('../txt/' + data).then(function(response) {
-            response.text().then(function(text) {
-            console.log("TXT FILE custom : ");
-            tabTextfiletout = text;
-            compteur = 0;
-            console.log(tabTextfiletout);
-
-            // Compteur sert à mettre seulement les bons characters dans le tableau //
-                
-            for(var i = 0;i<=tailleTxt;i++){
-                if(tabTextfiletout[i] != undefined &&tabTextfiletout[i] != "\r" && tabTextfiletout[i] != "\n" ){
-                    tabTextfile[compteur] = tabTextfiletout[i];
-                    compteur++;
-                }
+        // Compteur sert à mettre seulement les bons characters dans le tableau //
+            
+        for(var i = 0;i<=tailleTxt;i++){
+            if(tabTextfiletout[i] != undefined &&tabTextfiletout[i] != "\r" && tabTextfiletout[i] != "\n" ){
+                tabTextfile[compteur] = tabTextfiletout[i];
+                compteur++;
             }
-            valeurloadtxt = true;  
-            });
-            });
         }
+        valeurloadtxt = true; 
+        
+        });
+        });
+    }
 
 //Sinon fichier facile/normal/difficile etc...
     else{
-
         fetch('../txt/' + value + '.txt').then(function(response) {
             response.text().then(function(text) {
             tabTextfiletout = text;
             compteur = 0;
-            console.log("./TXT + value + .txt");
-            console.log(tabTextfiletout);
-
-            // Compteur sert à mettre seulement les bons characters dans le tableau //
                 
             for(var i = 0;i<=tailleTxt;i++){
                 if(tabTextfiletout[i] != undefined &&tabTextfiletout[i] != "\r" && tabTextfiletout[i] != "\n" ){
@@ -116,20 +91,19 @@ async function loadtxt(value)
     let promise = new Promise((res) => {
         setTimeout(() => res("Chargement du tableau terminé !"), 1000)
     });
-
     //Attente jusqu'à ce que la promesse aboutisse//
-    let result = await promise; 
-    console.log(result)
-    console.log(valeurloadtxt)
+    await promise; 
+
        if(valeurloadtxt==true){
-        console.log("Tableau map : ")
-        console.log(tabTextfile);
+
         lock = false;
         loadperso();
+        
         textureloadmap("generate");
         loadpositionperso(spawnjoueurx,spawnjoueury);
         document.getElementById("diamantsrecup").innerHTML=`Diamants : ${diamants} / ${totaldiamants}`;
-        stonearea();
+        positions_des_pierres();
+
         clock = true;
         }
 
@@ -139,6 +113,7 @@ async function loadtxt(value)
 //---------------------------------- Chargement des textures constituant la map ----------------------------//
     function textureloadmap(value){
         longueur = 0;
+        
         document.getElementById("mooverecup").innerHTML=`Nombre de déplacements : ${localStorage.getItem('Mouvements')}`;
         document.getElementById("respawn").innerHTML=`Nombre de réaparitions : ${respawn}`;
         document.getElementById("niveau").innerHTML=`Niveau ${niveau}`;
@@ -151,40 +126,40 @@ async function loadtxt(value)
             div.id = "block";
         
         
-        //detection si tableau = Terre ou Wall etc..//
-        if(tabTextfile[k] == "T"){
-            div.style.backgroundImage = 'url(../img/dirt.png)';
-        }
-        else if(tabTextfile[k] == "M"){
-            div.style.backgroundImage = 'url(../img/wall.png)';
-        }
-        else if(tabTextfile[k] == "D"){
-            div.style.backgroundImage = 'url(../img/diamant.gif)';
-            if(value == "generate"){
+            //detection si tableau = Terre ou Wall etc..//
+            if(tabTextfile[k] == "T"){
+                div.style.backgroundImage = 'url(../img/dirt.png)';
+            }
+            else if(tabTextfile[k] == "M"){
+                div.style.backgroundImage = 'url(../img/wall.png)';
+            }
+            else if(tabTextfile[k] == "D"){
+                div.style.backgroundImage = 'url(../img/diamant.gif)';
+                if(value == "generate"){
+                    totaldiamants++;
+                }
+            }
+            else if(tabTextfile[k] == "R"){
+                div.style.backgroundImage = 'url(../img/stone.png)';
+            }
+            else if(tabTextfile[k] == "V"){
+                div.style.backgroundImage = 'url(../img/vide.jpg)';
+            }
+            else if(tabTextfile[k] == "P"){
 
-                totaldiamants++;
-                console.log("totaldiams: " + totaldiamants);
+                //compteurX et compteurY servent à remettre l'image au bon endroit(en accord avec la position du perso)//
+                if(value == "generate"){
+                    console.log("k : " + k);
+                    posjoueur = k;
+                    console.log("posjoueur load : " + posjoueur)
+                    
+                    compteurX = longueur;
+                    compteurY = compteurTY;
+
+                    console.log("CompteurX : " + compteurX + " / compteurY : " + compteurY)
+                
             }
         }
-        else if(tabTextfile[k] == "R"){
-            div.style.backgroundImage = 'url(../img/stone.png)';
-        }
-        else if(tabTextfile[k] == "V"){
-            div.style.backgroundImage = 'url(../img/vide.jpg)';
-        }
-        else if(tabTextfile[k] == "P"){
-            //compteurX et compteurY servent à remettre l'image au bon endroit(en accord avec la position du perso)//
-            if(value == "generate"){
-            console.log("k : " + k);
-            posjoueur = k;
-            console.log("posjoueur load : " + posjoueur)
-    
-            compteurX = longueur;
-            compteurY = compteurTY;
-            console.log("CompteurX : " + compteurX + "compteurY : " + compteurY)
-            
-        }
-    }
         //permet de mettre un div DANS le div id:"container"//
         document.getElementById("container").appendChild(div);
         ++longueur;
@@ -211,16 +186,15 @@ function ifgetFilePath(){
 
 
 //Chargement dU JEU EN LUI MEME 
-window.addEventListener("load",async ()=>{
-    console.log("premierefois" + localStorage.getItem('premierefois'))
+window.addEventListener("load", ()=>{
+    console.log("premierefois = " + localStorage.getItem('premierefois'))
     if(continuerpartie()!= true){
-
         if(ifgetFilePath())
             loadtxt("custom");
         else 
             loadtxt(ordre[niveau-1]);
-
 }
+
 //premiere fois que le client clique sur charger une partie, alors il sera dirigé vers une nouvelle partie//
 else if(localStorage.getItem('premierefois') == 1) {
     console.log("Premiere fois !")
@@ -234,41 +208,39 @@ else{
     console.log("else..")
     lock = false;
    
-        loadperso();
-        console.log("TABTEXTFILE ELSE : ")
-        //sert à enlever les virgules du string, utilisation de balises JSON pour lire le localstorage de tabTextfile//
-        enlevervirgule()
-        console.log(localStorage.getItem('posjoueur')) 
-        tabTextfile[localStorage.getItem('posjoueur')] = "P"
-
-        textureloadmap("generate");
-     
-        loadpositionperso(spawnjoueurx,spawnjoueury);
-        document.getElementById("diamantsrecup").innerHTML=`Diamants : ${diamants} / ${totaldiamants}`;
-        stonearea();
-        clock = true;
+    
+    console.log("TABTEXTFILE ELSE : ")
+    //sert à enlever les virgules du string, utilisation de balises JSON pour lire le localstorage de tabTextfile//
+    enlevervirgule()
+    console.log("perso = " + localStorage.getItem('posjoueur')) 
+    tabTextfile[localStorage.getItem('posjoueur')] = "P"
+    loadperso();
+    textureloadmap("generate");
+    
+    loadpositionperso(spawnjoueurx,spawnjoueury);
+    document.getElementById("diamantsrecup").innerHTML=`Diamants : ${diamants} / ${totaldiamants}`;
+    positions_des_pierres();
+    clock = true;
 }
 
 })
 //Permet de détecter si le perso est mort, avec un delai de 500ms//
-setInterval(Refresh,delaiRefresh)
+setInterval(Refresh,500)
 
 
 function enlevervirgule(){
     var compteur = 0;
     for(var i = 0;i<1024;i++){
         if(JSON.parse(localStorage.getItem('tabTextfile'))[i] != ',' && JSON.parse(localStorage.getItem('tabTextfile'))[i] !=undefined && JSON.parse(localStorage.getItem('tabTextfile'))[i] !=null){
-        
-        tabTextfile[compteur]=JSON.parse(localStorage.getItem('tabTextfile'))[i]
-        console.log("compteur : " + compteur +" "  +tabTextfile[compteur])
-        compteur++;
+            tabTextfile[compteur]=JSON.parse(localStorage.getItem('tabTextfile'))[i]
+            compteur++;
         }
     }
 }
 
 function Refresh(){
     if(clock)
-    Joueurenvie();
+        Joueurenvie();
 }
 
 // ------------------- DETECTION DE DIFFÉRENT BLOCS ET CHANGEMENTS DE TEXTURES NÉCÉSAIRES ---------------------------//
@@ -291,11 +263,10 @@ function DetectionDiamant(){
 
 // DETECTION EN CAS DE VICTOIRE //
 function DetectionVictoire(){
- 
     if(totaldiamants==diamants){
-        //Fin du jeu//
-        if(niveau==ordre.length){
-            window.location.href='win.html';
+        
+        if(niveau==ordre.length){           //Fin du jeu//
+            alert("Bravo ! Vous avez termine tous les niveaux !")
         }
         //passage au niveau suivant//
         else{
@@ -308,14 +279,11 @@ function DetectionVictoire(){
 }
 
 // -------------------------- FONCTION SIMULANT LA GRAVITÉ POUR FAIRE TOMBER LES PIERRES ---------------------------//
-async function Gravite()
+export async function Gravite()
 {
     for(var k = 0; k < stoneArray.length;k++){
-
-
             ecrase(k);
         if(tabTextfile[stoneArray[k]+32] == "V"){
-                //Si joueur N'est PAS JUSTE en dessous du cailloux
                 if((stoneArray[k]+32) != posjoueur){
                     tabTextfile[stoneArray[k]+32] = "R";
                     tabTextfile[stoneArray[k]] = "V";
@@ -327,7 +295,7 @@ async function Gravite()
 //Fonction permettant de mettre dans un Array les Rochers//
 //Pour que par la suite il soit utilisé pour la détection de collision//
 
-function stonearea()
+function positions_des_pierres()
 {
     var placement = 0;
     for(var i = 0;i<512;i++)
@@ -341,7 +309,7 @@ function stonearea()
 //-------------------------------------------------------------------------------------------------------//
 
 // Chargement et affichage de la position du personnage //
-function loadpositionperso(valspawnx,valspawny){
+async function loadpositionperso(valspawnx,valspawny){
 
     if(compteurX != 0 && compteurY != 0){
         valspawnx = compteurX;
@@ -351,17 +319,15 @@ function loadpositionperso(valspawnx,valspawny){
         var joueurleftposAbsolute = joueur.offsetLeft;
         var joueurtopposAbsolute = joueur.offsetTop;
         
-    
-        // OBLIGATOIRE, POUR REMETTRE L'IMAGE AU POINT DE DEPART //
+
         joueurleftposAbsolute = 0;
         joueurtopposAbsolute = 0;
-        posxjoueur=joueurleftposAbsolute + x*valspawnx;
-        posyjoueur=joueurtopposAbsolute + y*valspawny;
+        posxjoueur=joueurleftposAbsolute + 32*valspawnx;
+        posyjoueur=joueurtopposAbsolute + 32*valspawny;
         
         tabTextfile[posjoueur] = 'V';
         joueur.style.left = (posxjoueur)+ 'px';
         joueur.style.top = (posyjoueur)+ 'px';
-    
         console.log("/leftpos: " + joueur.style.left + "/toppos: " + joueur.style.top + "/x joueur" + posxjoueur + "/y joueur" + posyjoueur);
         console.log("position joueur : " + posjoueur);
 }
@@ -436,19 +402,19 @@ function refreshplayer()
     while(firstnewplayerchild){
         firstnewplayerchild.remove();
         firstnewplayerchild = newplayer.firstElementChild;
-}
+    }
+    
 }
 
 function refreshmap(){
     //Detection du parent container//
     var block = document.getElementById('container');
-    //premier block enfant de container//
     var firstblockchild = block.firstElementChild; 
-    //tant que container a un enfant, le supprime et actualise l'enfant//  
    while(firstblockchild){
-    firstblockchild.remove();
-    firstblockchild = block.firstElementChild;
+        firstblockchild.remove();
+        firstblockchild = block.firstElementChild;
    }
+   textureloadmap("");
 }
 
 
@@ -467,11 +433,11 @@ function loadperso(){
     compteurY = 0;
     compteurTY = 0;
     var div = document.createElement("div");
-        div.style.width = "32px";
-        div.style.height = "32px";
-        div.style.backgroundImage = 'url(../img/perso.gif)';
-        document.getElementById("joueur").appendChild(div);
-        lock = true;
+    div.style.width = "32px";
+    div.style.height = "32px";
+    div.style.backgroundImage = 'url(../img/perso.gif)';
+    document.getElementById("joueur").appendChild(div);
+    lock = true;
 }
 }
 
@@ -487,6 +453,7 @@ function Joueurenvie(){
         localStorage.setItem('Mouvements',0);
         loadtxt(ordre[niveau-1]);
     }
+
 }
 function ecrase(valeur)
 {
@@ -500,14 +467,13 @@ function ecrase(valeur)
             {
                 if(posjoueur == stoneArray[valeur]+32*largeurmap){
                     p = valeur;
-                
-
+                }
                 if(((stoneArray[p]+32*largeurmap) == posjoueur)&&((tabTextfile[stoneArray[p]+32*largeurmap]) == "V") &&((tabTextfile[stoneArray[p]+32]) =="V")){
                 alive = false;
+                }
             }
-        }
-    }
 }
+
 
 // ------------------------- DIFFÉRENTS GETTERS ET SETTERS UTILES AU PROGRAMME -----------------------------------------//
 
@@ -530,5 +496,5 @@ function getposYjoueur(){
 
 //----------------------------------------------------------------------------------------------------------------------//
 
-export{Gravite,collision,DetectionTerre,DetectionDiamant,DetectionVictoire,refreshmap,refreshplayer,Joueurenvie,textureloadmap}
-export {setposjoueur,getPosjoueur,getposXjoueur,getposYjoueur}
+export{collision,DetectionTerre,DetectionDiamant,DetectionVictoire,refreshmap,refreshplayer,Joueurenvie,textureloadmap}
+export {setposjoueur,getPosjoueur,getposXjoueur,getposYjoueur,loadpositionperso}

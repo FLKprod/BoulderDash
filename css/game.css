@@ -1,19 +1,20 @@
-body{
-    /* INITIALISATIONS INDISPENSABLE DES MARGES */
-    margin:0;
-    width: 100vw;
-    height: 100vh;
-}
+
 
 /* EMPLACEMENT DU TITRE ET DU BOUTON RETOUR */
 .entete{
-    height: 20%;
     width: 100%;
     display: flex;
     justify-content:space-between;
     align-items: center;
     position :relative;
-}	
+    padding-bottom: 2em;
+}
+
+.entete > img{
+    height: 10em;
+    border-radius: 1em;
+    margin-top: 1em;
+}
 .alertify {
     font-family:Aerial;
     font-size:24px;
@@ -26,34 +27,21 @@ body{
     margin-right: 1%;
     margin-top: 2%;
 }
-.title{
-    font-family: Impact, sans-serif;
-    font-size: 30px;
-    width: 25%;
-    color:whitesmoke;
-    letter-spacing: 2px;
-    text-align: center;
-    border-style: double;
-    background: linear-gradient(90deg, darkblue, rgb(117, 117, 216), darkblue);
-    background-repeat: no-repeat;
-    border-radius: 6%;
-    padding: 1%;
-}
 
-/* EMPLACEMENT DES DONNÉES UTILES AU JEU */
+
 #score{
     font-size: 20px;
     position :fixed;
     margin-left: 1%;
     color: aliceblue;
-    background-color: darkblue;
+    background-color: darkred;
     opacity: 95%;
-    width:230px;
+    width:20%;
     border-radius: 8%;
     font-family: 'Black Ops One', cursive;
 }
 #score >p{
-    margin-left: 3%;
+    margin-left: 1em;
 }
 /* EMPLACEMENT DE LA MAP ET DU JOUEUR */
 #wrap{

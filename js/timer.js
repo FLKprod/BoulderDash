@@ -6,6 +6,8 @@ var temps=localStorage.getItem('temps');
 var minute=localStorage.getItem('minute');
 var seconde=localStorage.getItem('seconde');
 var heure=localStorage.getItem('heure');
+
+console.warn('lancement de timer.js')
 export function Timer(){
     temps++;
     while(temps-60>=0){
