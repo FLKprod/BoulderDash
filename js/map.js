@@ -45,7 +45,7 @@ var lock = false;
 }
 
 async function loadtxt(value)
-{
+{   
     value=ordre[niveau-1];                          //[niveau-1] car dans un tableau initialisation à 0 et non à 1//
     
     if(value == "custom"){          //Fichier custom choisi par le client//
@@ -112,6 +112,7 @@ async function loadtxt(value)
 
 //---------------------------------- Chargement des textures constituant la map ----------------------------//
     function textureloadmap(value){
+        
         longueur = 0;
         
         document.getElementById("mooverecup").innerHTML=`Nombre de déplacements : ${localStorage.getItem('Mouvements')}`;
@@ -212,7 +213,7 @@ else{
     //sert à enlever les virgules du string, utilisation de balises JSON pour lire le localstorage de tabTextfile//
     enlevervirgule()
     console.log("perso = " + localStorage.getItem('posjoueur')) 
-    tabTextfile[localStorage.getItem('posjoueur')] = "P"
+    tabTextfile[localStorage.getItem('posjoueur')] = "P";
     loadperso();
     textureloadmap("generate");
     
@@ -309,26 +310,27 @@ function positions_des_pierres()
 
 // Chargement et affichage de la position du personnage //
 async function loadpositionperso(valspawnx,valspawny){
-    console.log(compteurX + " / " + compteurY)
+    
     if(compteurX != 0 && compteurY != 0){
         valspawnx = compteurX;
         valspawny = compteurY;
+        joueurleftposAbsolute = 0;
+        joueurtopposAbsolute = 0;
     }
-        // prend les cotes "left" et "top" de l'image joueur //
+    else{
         var joueurleftposAbsolute = joueur.offsetLeft;
         var joueurtopposAbsolute = joueur.offsetTop;
         
-
-        joueurleftposAbsolute = 0;
-        joueurtopposAbsolute = 0;
+    }
+        // prend les cotes "left" et "top" de l'image joueur //
+        
         posxjoueur=joueurleftposAbsolute + 32*valspawnx;
         posyjoueur=joueurtopposAbsolute + 32*valspawny;
         
         tabTextfile[posjoueur] = 'V';
         joueur.style.left = (posxjoueur)+ 'px';
         joueur.style.top = (posyjoueur)+ 'px';
-        console.log("/leftpos: " + joueur.style.left + "/toppos: " + joueur.style.top + "/x joueur" + posxjoueur + "/y joueur" + posyjoueur);
-        console.log("position joueur : " + posxjoueur + " / " + posyjoueur + " et pos : " + pos);
+        console.log("position joueur : " + posxjoueur + " / " + posyjoueur + " et pos : " + posjoueur);
 }
     
 
@@ -388,9 +390,15 @@ function collision(valeur){
 //Cette fonction permet d'effacer le joueur/la map/et le tableau associé à la map//
 function touteffacer()
 {
-    refreshplayer();
+    console.log("effaceeeeeeeeee");
+    localStorage.setItem('tabTextfile','')
+    tabTextfile = []; 
     refreshmap();
-    tabTextfile = [];
+    refreshplayer();
+    
+    
+    
+      
 }
 //Ces 2 fonctions permettent respectivement d'effacer le joueur pour le placer ailleurs, et l'effacement de la map//
 function refreshplayer()
@@ -447,10 +455,41 @@ function Joueurenvie(){
         clock = false;
         lock = false;
         touteffacer();
+        tabTextfile = []; 
+        
+
+        
+
+
         respawn++;
         localStorage.setItem('respawn',respawn);
         localStorage.setItem('Mouvements',0);
+        
         loadtxt(ordre[niveau-1]);
+        // Sélection de tous les éléments div à l'intérieur du conteneur
+        const container = document.getElementById('container');
+
+        // Sélection de tous les éléments div à l'intérieur du conteneur
+        const divs = container.querySelectorAll('div');
+
+        // Suppression des 512 premières divs
+        for (let i = 0; i < 512 && i < divs.length; i++) {
+            // Suppression de la première div à chaque itération
+            divs[i].remove();
+            console.log("div deleted")
+        }
+
+        // Sélection de tous les éléments div à l'intérieur du conteneur
+        const brs = container.querySelectorAll('br');
+
+        // Suppression des 512 premières divs
+        for (let i = 0; i < 16 && i < divs.length; i++) {
+            // Suppression de la première div à chaque itération
+            brs[i].remove();
+            console.log("line deleted")
+        }
+
+        
     }
 
 }

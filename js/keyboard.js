@@ -20,101 +20,110 @@ export async function keyboard() {
     var _posjoueur = getPosjoueur();
     joueurleft = joueur.offsetLeft;
     joueurtop = joueur.offsetTop;
-    var direction
+    var direction,update=true;
     
     // La variable vertical précise si le joueur se déplace verticalement ou non.
     // Les variables directionvertical et directionhorizontal servent à faire bouger le personnage en fonction de la touche pressée.
     // La variable _posjoueur calcule la coordonnée du personnage
-
+    update_cases();
     if (event.key === "w" || event.key === "ArrowUp") {
         directionvertical = -1;
-            vertical = 0;
-            _posjoueur-=ligne;
-
-            // AUGMENTATION DU NOMBRE DE MOUVEMENT ET DETECTION SI COLISIONS //
-            
-            
+        vertical = 0;
+        _posjoueur-=ligne;
+        update_posjoueur();
+        if(collision("w")==true){
+            console.warn("COLISION")
+            _posjoueur+=ligne;
+            directionvertical=0;
+            mouvements--;
             update_posjoueur();
-            if(collision("w")==true){
-                _posjoueur+=ligne;
-                directionvertical=0;
-                mouvements--;
-            }
-            localStorage.setItem('Mouvements',mouvements);
+        }
     } else if (event.key === "s" || event.key === "ArrowDown") {
         directionvertical = 1;
-            vertical = 0;
-            _posjoueur+=ligne;
-          
-            // AUGMENTATION DU NOMBRE DE MOUVEMENT ET DETECTION SI COLISIONS //
-           
+        vertical = 0;
+        _posjoueur+=ligne;
+        
+        update_posjoueur();
+        if(collision("s")==true){
+            console.warn("COLISION")
+            _posjoueur-=ligne;
+            directionvertical=0;
+            mouvements--;
             update_posjoueur();
-            if(collision("s")==true){
-                _posjoueur-=ligne;
-                directionvertical=0;
-                mouvements--;
-            }
-            localStorage.setItem('Mouvements',mouvements);
+        }
     } else if (event.key === "a" || event.key === "ArrowLeft") {
         directionhorizontal = -1;
-            vertical = 1;
-            _posjoueur--;
-
+        vertical = 1;
+        _posjoueur--;
+        update_posjoueur();
+        if(collision("left")==true){
+            console.warn("COLISION")
+            _posjoueur++;
+            directionhorizontal=0;
+            mouvements--;
             update_posjoueur();
-            if(collision("left")==true){
-                _posjoueur++;
-                directionhorizontal=0;
-                mouvements--;
-            }
-            localStorage.setItem('Mouvements',mouvements);
+        }
     } else if (event.key === "d" || event.key === "ArrowRight") {
         directionhorizontal = 1;
-            vertical = 1;
-            _posjoueur++;
+        vertical = 1;
+        _posjoueur++;
+        update_posjoueur();
+        if(collision("right")==true){
+            console.warn("COLISION")
+            _posjoueur--;
+            directionhorizontal=0;
+            mouvements--;
             update_posjoueur();
-            if(collision("right")==true){
-                _posjoueur--;
-                directionhorizontal=0;
-                mouvements--;
-            }
-            localStorage.setItem('Mouvements',mouvements);
+        }
+        
         
     }
-    console.log(event.key);
-    console.log(mouvements);
-    document.getElementById("mooverecup").innerHTML = `Nombre de déplacements : ${mouvements++}`;
+    else{
+        update = false;
+    }
     
-    
-    
-    
-    
-    update_cases();
+
+    if(update != false){
+        update_cases()
+        update_posjoueur();
+        console.log(event.key);
+        localStorage.setItem('Mouvements',mouvements);
+        document.getElementById("mooverecup").innerHTML = `Nombre de déplacements : ${mouvements++}`;
+        
     
     if(vertical == 0){
-        joueur.style.top = (joueurtop + vitesse * directionvertical) + 'px';
+        joueur.style.top = (joueurtop + vitesse * directionvertical) + 'px';joueur.style.left = joueurleft+ 'px';
     }
-    else joueur.style.left = (joueurleft + vitesse * directionhorizontal) + 'px';
+    else {
+        joueur.style.left = (joueurleft + vitesse * directionhorizontal) + 'px';
+        joueur.style.top = joueurtop+ 'px';}
 
-    console.log("/leftpos: " + joueur.style.left + "/toppos: " + joueur.style.left);
     console.log("position joueur actuelle  : " + _posjoueur);
-    
+    console.log("joueur top : " + joueur.style.top + " / joueur left : "+ joueur.style.left)
 
+    await Gravite();
+    refreshmap();
 
     // RAFRAICHISSEMENT DE LA MAP ET DÉTÉCTION DE PIERRES QUI TOMBENT PAR L'ÉFFET DE LA GRAVITÉ //
-    Gravite();
-    refreshmap();
+    
+    
+    }
+    
+    
+    
+    
+    
     
     
     function update_posjoueur() {
         setposjoueur(_posjoueur);
-        loadpositionperso(getposXjoueur(),getposYjoueur());
     }
 
     async function update_cases() {
         DetectionTerre();
         DetectionDiamant();
-        refreshmap();
-        await Gravite();
+        
+        
         if(DetectionVictoire() === true) {
             directionvertical = 0;
             directionhorizontal = 0;
