@@ -153,8 +153,8 @@ async function loadtxt(value)
                     posjoueur = k;
                     console.log("posjoueur load : " + posjoueur)
                     
-                    compteurX = longueur;
-                    compteurY = compteurTY;
+                    compteurX += longueur;
+                    compteurY += compteurTY;
 
                     console.log("CompteurX : " + compteurX + " / compteurY : " + compteurY)
                 
@@ -207,7 +207,6 @@ else if(localStorage.getItem('premierefois') == 1) {
 else{
     console.log("else..")
     lock = false;
-   
     
     console.log("TABTEXTFILE ELSE : ")
     //sert à enlever les virgules du string, utilisation de balises JSON pour lire le localstorage de tabTextfile//
@@ -310,7 +309,7 @@ function positions_des_pierres()
 
 // Chargement et affichage de la position du personnage //
 async function loadpositionperso(valspawnx,valspawny){
-
+    console.log(compteurX + " / " + compteurY)
     if(compteurX != 0 && compteurY != 0){
         valspawnx = compteurX;
         valspawny = compteurY;
@@ -329,7 +328,7 @@ async function loadpositionperso(valspawnx,valspawny){
         joueur.style.left = (posxjoueur)+ 'px';
         joueur.style.top = (posyjoueur)+ 'px';
         console.log("/leftpos: " + joueur.style.left + "/toppos: " + joueur.style.top + "/x joueur" + posxjoueur + "/y joueur" + posyjoueur);
-        console.log("position joueur : " + posjoueur);
+        console.log("position joueur : " + posxjoueur + " / " + posyjoueur + " et pos : " + pos);
 }
     
 
@@ -337,12 +336,12 @@ async function loadpositionperso(valspawnx,valspawny){
 function collision(valeur){
     //SI COLLISION ALORS RETURN TRUE, SINON FALSE//
     if(tabTextfile[posjoueur] == "M"){
-    console.log("collision avec MUR"); 
-    return true;
+        console.log("collision avec MUR"); 
+        return true;
     }
     else if(tabTextfile[posjoueur] == "R"){
         console.log("collision avec STONE");
-        if(valeur == "droite" || valeur == "gauche"){
+        if(valeur == "left" || valeur == "right"){
 
         for(var k = 0; k < stoneArray.length;k++){
             //valeur pour 1 CAILLOU//
@@ -353,7 +352,7 @@ function collision(valeur){
                 break;
             }
         }
-        if(valeur == "droite"){
+        if(valeur == "right"){
             //POUSSER LE CAILLOUX VERS LA DROITE//
            
             if((tabTextfile[stoneArray[p]+1] == "V") && (posjoueur == stoneArray[p])){
@@ -365,7 +364,7 @@ function collision(valeur){
                 return false;
         }
     }
-        if(valeur == "gauche"){
+        if(valeur == "left"){
             //POUSSER LE CAILLOUX VERS LA GAUCHE//
             
             if((tabTextfile[stoneArray[p]-1] == "V") && (posjoueur == stoneArray[p])){
@@ -389,8 +388,8 @@ function collision(valeur){
 //Cette fonction permet d'effacer le joueur/la map/et le tableau associé à la map//
 function touteffacer()
 {
-    refreshmap();
     refreshplayer();
+    refreshmap();
     tabTextfile = [];
 }
 //Ces 2 fonctions permettent respectivement d'effacer le joueur pour le placer ailleurs, et l'effacement de la map//
