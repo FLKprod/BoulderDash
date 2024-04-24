@@ -69,7 +69,7 @@ button{
 .btn-active{
     color: red;
     border: 0px transparent;
-    border-radius: 3rem;
+    border-radius: 1rem;
     transition: 0.3s ease-in-out;
     transition-delay: 0.3s;
     overflow: hidden;

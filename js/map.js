@@ -114,7 +114,7 @@ async function loadtxt(value)
     function textureloadmap(value){
         
         longueur = 0;
-        
+        deleteemptyelements();
         document.getElementById("mooverecup").innerHTML=`Nombre de déplacements : ${localStorage.getItem('Mouvements')}`;
         document.getElementById("respawn").innerHTML=`Nombre de réaparitions : ${respawn}`;
         document.getElementById("niveau").innerHTML=`Niveau ${niveau}`;
@@ -160,6 +160,7 @@ async function loadtxt(value)
                     console.log("CompteurX : " + compteurX + " / compteurY : " + compteurY)
                 
             }
+            
         }
         //permet de mettre un div DANS le div id:"container"//
         document.getElementById("container").appendChild(div);
@@ -263,13 +264,14 @@ function DetectionDiamant(){
 
 // DETECTION EN CAS DE VICTOIRE //
 function DetectionVictoire(){
-    if(totaldiamants==diamants){
+    if(totaldiamants===diamants){
         
-        if(niveau==ordre.length){           //Fin du jeu//
+        if(niveau===ordre.length){           //Fin du jeu//
             alert("Bravo ! Vous avez termine tous les niveaux !")
         }
         //passage au niveau suivant//
         else{
+            
             alive=false;
             niveau++;
             Joueurenvie();
@@ -469,25 +471,7 @@ function Joueurenvie(){
         // Sélection de tous les éléments div à l'intérieur du conteneur
         const container = document.getElementById('container');
 
-        // Sélection de tous les éléments div à l'intérieur du conteneur
-        const divs = container.querySelectorAll('div');
-
-        // Suppression des 512 premières divs
-        for (let i = 0; i < 512 && i < divs.length; i++) {
-            // Suppression de la première div à chaque itération
-            divs[i].remove();
-            console.log("div deleted")
-        }
-
-        // Sélection de tous les éléments div à l'intérieur du conteneur
-        const brs = container.querySelectorAll('br');
-
-        // Suppression des 512 premières divs
-        for (let i = 0; i < 16 && i < divs.length; i++) {
-            // Suppression de la première div à chaque itération
-            brs[i].remove();
-            console.log("line deleted")
-        }
+        deleteemptyelements()
 
         
     }
@@ -530,6 +514,31 @@ function getposXjoueur(){
 
 function getposYjoueur(){
     return posyjoueur;
+}
+
+export function deleteemptyelements(){
+    // Sélection de tous les éléments div à l'intérieur du conteneur
+    const container = document.getElementById('container');
+
+    // Sélection de tous les éléments div à l'intérieur du conteneur
+    const divs = container.querySelectorAll('div');
+
+    // Suppression des 512 premières divs
+    for (let i = 0; i < 512 && i < divs.length; i++) {
+        // Suppression de la première div à chaque itération
+        divs[i].remove();
+        console.log("div deleted")
+    }
+
+    // Sélection de tous les éléments div à l'intérieur du conteneur
+    const brs = container.querySelectorAll('br');
+
+    // Suppression des 512 premières divs
+    for (let i = 0; i < 16 && i < divs.length; i++) {
+        // Suppression de la première div à chaque itération
+        brs[i].remove();
+        console.log("line deleted")
+    }
 }
 
 //----------------------------------------------------------------------------------------------------------------------//

@@ -58,7 +58,7 @@ body > input{
     font-size: 90px;
 }
 .btn-active:hover {
-    background-color: #5533ff;
+    background-color: darkred;
     color: whitesmoke;
 }
 h2{

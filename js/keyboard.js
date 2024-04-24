@@ -1,4 +1,4 @@
-import {loadpositionperso,Gravite,DetectionTerre,DetectionDiamant,DetectionVictoire,refreshmap,setposjoueur,getPosjoueur,getposXjoueur,getposYjoueur, collision,textureloadmap} from './map.js'
+import {loadpositionperso,Gravite,DetectionTerre,DetectionDiamant,DetectionVictoire,refreshmap,setposjoueur,getPosjoueur,getposXjoueur,getposYjoueur, collision,deleteemptyelements} from './map.js'
 console.warn("Lancement de Keyboard.js!");
 
 // Variables pour initialiser et faire bouger le perso //
@@ -125,6 +125,7 @@ export async function keyboard() {
         
         
         if(DetectionVictoire() === true) {
+            
             directionvertical = 0;
             directionhorizontal = 0;
             joueurleft = getposXjoueur;
